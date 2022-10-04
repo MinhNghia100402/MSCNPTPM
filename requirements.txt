@@ -1,0 +1,13 @@
+torch
+torchvision
+numpy
+scikit-image
+sklearn
+matplotlib
+imutils
+opencv-python
+Cython
+cython-bbox
+lap
+onnxruntime
+Flask

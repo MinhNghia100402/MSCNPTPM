@@ -1,7 +1,6 @@
 from flask import Flask, request
 from PIL import Image
 import numpy  as np
-import cv2
 import argparse
 
 from functions import check_face

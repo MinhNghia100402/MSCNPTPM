@@ -17,15 +17,13 @@ database_emb = {
     'embs': []
 }
 
-msvs={'ids': []}
-data = 'data'
-img_data_list = os.listdir(data)
+path_data = 'data'
+img_data_list = os.listdir(path_data)
 for i in range(len(img_data_list)):
-    img_path = os.path.join(data, img_data_list[i])
+    img_path = os.path.join(path_data, img_data_list[i])
     img = cv2.imread(img_path)
     fbox, kpss = retina_face.detect(img)
     tbox, tids = tracker.predict(img, fbox)
-    # print(kpss[0])
     emb = arc_face.get(img, kpss[0])
     
     database_emb['embs'].append(emb)
@@ -64,21 +62,21 @@ def dectect_tracking_face(img, num_face=None):
     tboxes, tids = tracker.predict(img, fboxes[:num_face])
     tkpss = [None]*len(fboxes)
 
-    # for i, val in enumerate(tboxes):
-    #     d = np.sum(np.abs(val-fboxes[:, :-1]), axis=1)
-    #     tkpss[i] = fkpss[np.argmin(d)] 
+    for i, val in enumerate(tboxes):
+        d = np.sum(np.abs(val-fboxes[:, :-1]), axis=1)
+        tkpss[i] = kpss[np.argmin(d)] 
 
     # test start
-    for i in range(len(tboxes)):
-            min_d = 9e5
-            tb = tboxes[i]
-            for j in range(len(fboxes)):
-                fb = fboxes[j]
-                d = abs(tb[0]-fb[0])+abs(tb[1]-fb[1]) + \
-                    abs(tb[2]-fb[2])+abs(tb[3]-fb[3])
-                if d < min_d:
-                    min_d = d
-                    tkpss[i] = kpss[j]
+    # for i in range(len(tboxes)):
+    #         min_d = 9e5
+    #         tb = tboxes[i]
+    #         for j in range(len(fboxes)):
+    #             fb = fboxes[j]
+    #             d = abs(tb[0]-fb[0])+abs(tb[1]-fb[1]) + \
+    #                 abs(tb[2]-fb[2])+abs(tb[3]-fb[3])
+    #             if d < min_d:
+    #                 min_d = d
+    #                 tkpss[i] = kpss[j]
     # test end
 
     return tids, tboxes, tkpss
@@ -116,7 +114,7 @@ def check_face(img):
     tids, tboxes, tkpss = dectect_tracking_face(img, num_face=1)
     _, embs = check_angle_emb(img, tids, tboxes, tkpss)
     for emb in embs:
-        id = find_face_from_database(emb)
+        id = find_face_from_database(emb).split('.')[-2].split('_')[-1]
         return id
     return None
 
@@ -131,7 +129,6 @@ if __name__ == '__main__':
     # print(len(tboxes))
     # tids, tboxes, tkpss = dectect_tracking_face(img, num_face=1)
     
-
     # img = draw_face_box(img, tboxes)
 
     # cv2.imwrite('./data/generate.jpg', img)

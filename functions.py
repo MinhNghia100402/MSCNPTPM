@@ -1,3 +1,4 @@
+import os
 import cv2
 import numpy as np
 from model.face import RetinaFace, ArcFace, Landmark
@@ -9,8 +10,6 @@ tracker = BYTETracker()
 landmark = Landmark()
 
 # init dataset
-import os
-
 recog_data={}
 database_emb = {
     'userID': [],
@@ -22,12 +21,14 @@ img_data_list = os.listdir(path_data)
 for i in range(len(img_data_list)):
     img_path = os.path.join(path_data, img_data_list[i])
     img = cv2.imread(img_path)
-    fbox, kpss = retina_face.detect(img)
-    tbox, tids = tracker.predict(img, fbox)
-    emb = arc_face.get(img, kpss[0])
+    fbox_data, kpss_data = retina_face.detect(img)
+    # kpss: keypoint
+    emb_data = arc_face.get(img, kpss_data[0])
     
-    database_emb['embs'].append(emb)
+    database_emb['embs'].append(emb_data)
     database_emb['userID'].append(img_data_list[i])
+database_emb['embs'] = np.array(database_emb['embs'])
+
 print('Extract feature on databse done!')
 # end init dataset
 
@@ -56,7 +57,7 @@ def draw_fancy_box(img, pt1, pt2, color, thickness, r, d):
     cv2.ellipse(img, (x2 - r, y2 - r), (r, r), 0, 0, 90, color, thickness)
 
 def dectect_tracking_face(img, num_face=None):
-    fboxes, _ = retina_face.detect(img)
+    fboxes, kpss = retina_face.detect(img)
     if num_face is None:
         num_face = fboxes.shape[0]
     tboxes, tids = tracker.predict(img, fboxes[:num_face])
@@ -66,27 +67,19 @@ def dectect_tracking_face(img, num_face=None):
         d = np.sum(np.abs(val-fboxes[:, :-1]), axis=1)
         tkpss[i] = kpss[np.argmin(d)] 
 
-    # test start
-    # for i in range(len(tboxes)):
-    #         min_d = 9e5
-    #         tb = tboxes[i]
-    #         for j in range(len(fboxes)):
-    #             fb = fboxes[j]
-    #             d = abs(tb[0]-fb[0])+abs(tb[1]-fb[1]) + \
-    #                 abs(tb[2]-fb[2])+abs(tb[3]-fb[3])
-    #             if d < min_d:
-    #                 min_d = d
-    #                 tkpss[i] = kpss[j]
-    # test end
-
     return tids, tboxes, tkpss
 
-def draw_face_box(frame, boxes=None):
+def draw_face_box(frame):
     img = frame.copy()
-    if boxes is None:
-        _, boxes, _ = dectect_tracking_face(img)
-    for tbox in boxes:
+    tids, tboxes, tkpss = dectect_tracking_face(img)
+    _, embs = check_angle_emb(img, tids, tboxes, tkpss)
+
+    for tbox, emb in zip(tboxes, embs):
         box = tbox[:4].astype(int)
+        id = None if emb is None else find_face_from_database(emb)
+        if id is not None:
+            id = id.split('.')[-2]
+        cv2.putText(img, ("Strange", id)[id != None], (box[0], box[1]-10), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 2)
         draw_fancy_box(img, (box[0], box[1]), (box[2], box[3]), (127, 255, 255), 2, 10, 20)
     return img
 
@@ -99,6 +92,9 @@ def check_angle_emb(frame, tids, tboxes , tkpss, thread=15):
         if angle < thread:
             emb = arc_face.get(frame, tkps)
             embs.append(emb)
+            ids.append(tid)
+        else:
+            embs.append(None)
             ids.append(tid)
     return ids, embs
 
@@ -114,38 +110,23 @@ def check_face(img):
     tids, tboxes, tkpss = dectect_tracking_face(img, num_face=1)
     _, embs = check_angle_emb(img, tids, tboxes, tkpss)
     for emb in embs:
-        id = find_face_from_database(emb).split('.')[-2].split('_')[-1]
+        id = None if emb is None else find_face_from_database(emb)
+        if id is not None:
+            id = id.split('.')[-2].split('_')[-1]
         return id
     return None
 
 if __name__ == '__main__':
-    img = cv2.imread('./data/test.jpg')
-    print(check_face(img))
-    print(check_face(img))
+    cap = cv2.VideoCapture(0)
+    while True:
+        _, frame = cap.read()
+        frame = cv2.flip(frame, 1)
 
-    # img = draw_face_box(img)
-    
+        img = draw_face_box(frame)
 
-    # print(len(tboxes))
-    # tids, tboxes, tkpss = dectect_tracking_face(img, num_face=1)
-    
-    # img = draw_face_box(img, tboxes)
+        cv2.imshow('', img)
 
-    # cv2.imwrite('./data/generate.jpg', img)
-
-    # import ipdb; ipdb.set_trace()
-
-    # cap = cv2.VideoCapture(0)
-    # while True:
-    #     _, frame = cap.read()
-    #     frame = cv2.flip(frame, 1)
-
-    #     print(check_face(frame))
-
-    #     cv2.imshow('', frame)
-
-    #     if cv2.waitKey(1) & 0xFF == ord('x'):
-    #         # cv2.imwrite('./data/test.jpg', frame)
-    #         break
-    # cap.release()
-    # cv2.destroyAllWindows()
+        if cv2.waitKey(1) & 0xFF == ord('x'):
+            break
+    cap.release()
+    cv2.destroyAllWindows()

@@ -3,6 +3,11 @@ import cv2
 import numpy as np
 from model.face import RetinaFace, ArcFace, Landmark
 from model.tracking import BYTETracker
+import argparse
+
+parser = argparse.ArgumentParser(description='Chooose option')
+parser.add_argument('-d', '--dataset', type=str, default="data")
+args = parser.parse_args()
 
 retina_face = RetinaFace(model_name='retina_s')
 arc_face = ArcFace(model_name='arcface_s')
@@ -16,7 +21,7 @@ database_emb = {
     'embs': []
 }
 
-path_data = 'data'
+path_data = args.dataset
 img_data_list = os.listdir(path_data)
 for i in range(len(img_data_list)):
     img_path = os.path.join(path_data, img_data_list[i])

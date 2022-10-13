@@ -104,6 +104,8 @@ def check_angle_emb(frame, tids, tboxes , tkpss, thread=15):
     return ids, embs
 
 def find_face_from_database(emb, thresh=0.1):
+    if database_emb['embs'].shape[0] == 0:
+        return None
     dis = np.dot(database_emb['embs'], emb) / (np.linalg.norm(database_emb['embs']) * np.linalg.norm(emb))
     if np.max(dis) > thresh:
         idx = np.argmax(dis)

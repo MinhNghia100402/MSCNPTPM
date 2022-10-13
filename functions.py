@@ -22,19 +22,21 @@ database_emb = {
 }
 
 path_data = args.dataset
-img_data_list = os.listdir(path_data)
-for i in range(len(img_data_list)):
-    img_path = os.path.join(path_data, img_data_list[i])
-    img = cv2.imread(img_path)
-    fbox_data, kpss_data = retina_face.detect(img)
-    # kpss: keypoint
-    emb_data = arc_face.get(img, kpss_data[0])
-    
-    database_emb['embs'].append(emb_data)
-    database_emb['userID'].append(img_data_list[i])
+try:
+    img_data_list = os.listdir(path_data)
+    for i in range(len(img_data_list)):
+        img_path = os.path.join(path_data, img_data_list[i])
+        img = cv2.imread(img_path)
+        fbox_data, kpss_data = retina_face.detect(img)
+        # kpss: keypoint
+        emb_data = arc_face.get(img, kpss_data[0])
+        
+        database_emb['embs'].append(emb_data)
+        database_emb['userID'].append(img_data_list[i])
+    print('Extract feature on databse done!')
+except:
+    print('The database path error!')
 database_emb['embs'] = np.array(database_emb['embs'])
-
-print('Extract feature on databse done!')
 # end init dataset
 
 def draw_fancy_box(img, pt1, pt2, color, thickness, r, d):

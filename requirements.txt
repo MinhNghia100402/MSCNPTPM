@@ -5,6 +5,9 @@ onnxruntime
 gdown
 sklearn
 lap
+Cython
+numpy
+gcc7
 cython-bbox
 fastapi
 uvicorn

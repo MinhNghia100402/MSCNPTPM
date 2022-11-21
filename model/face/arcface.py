@@ -9,6 +9,9 @@ from sklearn.preprocessing import normalize
 import os, gdown
 
 model_dir = os.path.join(os.path.expanduser('~'), '.hawkeye/model')
+if not os.path.exists(model_dir):
+    os.makedirs(model_dir)
+    
 class ArcFace:
     def __init__(self, model_name='', model_file=None, session=None):
 

@@ -10,7 +10,9 @@ import os, gdown
 
 face3Dmodel = world.ref3DModel()
 model_dir = os.path.join(os.path.expanduser('~'), '.hawkeye/model')
-
+if not os.path.exists(model_dir):
+    os.makedirs(model_dir)
+    
 class Landmark:
     def __init__(self, model_name='', model_file=None, session=None):
         if model_file is None:

@@ -7,6 +7,9 @@ import os
 # from utils.face_mask_detection import keras_face_detection as cnn
 
 model_dir = os.path.join(os.path.expanduser('~'), '.hawkeye/model')
+if not os.path.exists(model_dir):
+    os.makedirs(model_dir)
+
 class RetinaFace:
     def __init__(self, model_name='', model_file=None, conf=0.5, session=None):
         '''

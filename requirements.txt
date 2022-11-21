@@ -3,11 +3,10 @@ scikit-image
 onnx
 onnxruntime
 gdown
-sklearn
+scikit-learn
 lap
 Cython
 numpy
-gcc7
 cython-bbox
 fastapi
 uvicorn

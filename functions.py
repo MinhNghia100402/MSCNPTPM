@@ -90,7 +90,7 @@ def draw_face_box(frame):
         draw_fancy_box(img, (box[0], box[1]), (box[2], box[3]), (127, 255, 255), 2, 10, 20)
     return img
 
-def check_angle_emb(frame, tids, tboxes , tkpss, thread=15):
+def check_angle_emb(frame, tids, tboxes , tkpss, thread=10):
     ids = []
     embs = []
     for tid, tbox, tkps in zip(tids, tboxes, tkpss):
@@ -105,10 +105,10 @@ def check_angle_emb(frame, tids, tboxes , tkpss, thread=15):
             ids.append(tid)
     return ids, embs
 
-def find_face_from_database(emb, thresh=0.1):
-    if database_emb['embs'].shape[0] == 0:
+def find_face_from_database(emb, thresh=0.2):
+    if database_emb['embs'][0].shape[0] == 0:
         return None
-    dis = np.dot(database_emb['embs'], emb) / (np.linalg.norm(database_emb['embs']) * np.linalg.norm(emb))
+    dis = np.dot(database_emb['embs'], emb) / (np.linalg.norm(database_emb['embs'], axis=1) * np.linalg.norm(emb))
     if np.max(dis) > thresh:
         idx = np.argmax(dis)
         return database_emb['userID'][idx]
@@ -118,12 +118,12 @@ def find_face_from_database(emb, thresh=0.1):
 def check_face(img):
     tids, tboxes, tkpss = dectect_tracking_face(img, num_face=1)
     _, embs = check_angle_emb(img, tids, tboxes, tkpss)
+    id, name = None, None
     for emb in embs:
         id = None if emb is None else find_face_from_database(emb)
         if id is not None:
-            id = id.split('.')[-2].split('_')[-1]
-        return id
-    return None
+            name, id = id.split('.')[0].split('_')
+    return id, name
 
 if __name__ == '__main__':
     cap = cv2.VideoCapture(0)

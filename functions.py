@@ -86,11 +86,11 @@ def draw_face_box(frame):
         id = None if emb is None else find_face_from_database(emb)
         if id is not None:
             id = id.split('.')[-2]
-        cv2.putText(img, ("Strange", id)[id != None], (box[0], box[1]-10), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 2)
+        cv2.putText(img, ("Strange", id)[id != None], (box[0], box[1]-10), cv2.FONT_HERSHEY_COMPLEX, 1, ((0, 0, 255), (0, 255, 0))[id != None], 2)
         draw_fancy_box(img, (box[0], box[1]), (box[2], box[3]), (127, 255, 255), 2, 10, 20)
     return img
 
-def check_angle_emb(frame, tids, tboxes , tkpss, thread=10):
+def check_angle_emb(frame, tids, tboxes , tkpss, thread=15):
     ids = []
     embs = []
     for tid, tbox, tkps in zip(tids, tboxes, tkpss):
@@ -105,7 +105,7 @@ def check_angle_emb(frame, tids, tboxes , tkpss, thread=10):
             ids.append(tid)
     return ids, embs
 
-def find_face_from_database(emb, thresh=0.2):
+def find_face_from_database(emb, thresh=0.3):
     if database_emb['embs'][0].shape[0] == 0:
         return None
     dis = np.dot(database_emb['embs'], emb) / (np.linalg.norm(database_emb['embs'], axis=1) * np.linalg.norm(emb))

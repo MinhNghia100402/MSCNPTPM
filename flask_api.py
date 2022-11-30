@@ -18,18 +18,12 @@ CORS(app)
 def load_image2array(data):
     return np.array(Image.open(data))
 
-cnt = 0
 @app.post('/check')
 def check(): 
     global cnt
     img = load_image2array(request.files['file'].stream)
 
     id, name = check_face(img)
-    
-    # if id is not None:
-    #     img = Image.fromarray(img)
-    #     img.save(f"img/{cnt}.jpeg")
-    #     cnt += 1
 
     return {'msv': id, 'name': name}
 

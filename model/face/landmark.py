@@ -9,7 +9,7 @@ from .aux_functions import get_line, get_angle, convert_106p_to_86p
 import os, gdown
 
 face3Dmodel = world.ref3DModel()
-model_dir = os.path.join(os.path.expanduser('~'), '.hawkeye/model')
+model_dir = os.path.join(os.path.expanduser('~'), 'retinaface/model')
 if not os.path.exists(model_dir):
     os.makedirs(model_dir)
     

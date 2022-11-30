@@ -8,7 +8,7 @@ import cv2
 from sklearn.preprocessing import normalize
 import os, gdown
 
-model_dir = os.path.join(os.path.expanduser('~'), '.hawkeye/model')
+model_dir = os.path.join(os.path.expanduser('~'), 'retinaface/model')
 if not os.path.exists(model_dir):
     os.makedirs(model_dir)
     

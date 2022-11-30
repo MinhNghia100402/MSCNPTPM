@@ -76,10 +76,10 @@ def dectect_tracking_face(img, num_face=None):
 
     return tids, tboxes, tkpss
 
-def draw_face_box(frame):
+def draw_face_box(frame, thread):
     img = frame.copy()
     tids, tboxes, tkpss = dectect_tracking_face(img)
-    _, embs = check_angle_emb(img, tids, tboxes, tkpss)
+    _, embs = check_angle_emb(img, tids, tboxes, tkpss, thread)
 
     for tbox, emb in zip(tboxes, embs):
         box = tbox[:4].astype(int)
@@ -131,7 +131,7 @@ if __name__ == '__main__':
         _, frame = cap.read()
         frame = cv2.flip(frame, 1)
 
-        img = draw_face_box(frame)
+        img = draw_face_box(frame, 20)
 
         cv2.imshow('', img)
 

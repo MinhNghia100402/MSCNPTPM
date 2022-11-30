@@ -7,6 +7,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='Chooose option')
 parser.add_argument('-d', '--dataset', type=str, default="data")
+parser.add_argument('-m', '--max_face', type=int, default=-1)
 args = parser.parse_args()
 
 retina_face = RetinaFace(model_name='retina_s')
@@ -63,7 +64,7 @@ def draw_fancy_box(img, pt1, pt2, color, thickness, r, d):
     cv2.line(img, (x2, y2 - r), (x2, y2 - r - d), color, thickness)
     cv2.ellipse(img, (x2 - r, y2 - r), (r, r), 0, 0, 90, color, thickness)
 
-def dectect_tracking_face(img, num_face=0):
+def dectect_tracking_face(img, num_face=-1):
     fboxes, kpss = retina_face.detect(img, max_num=num_face)
 
     tboxes, tids = tracker.predict(img, fboxes)
@@ -74,9 +75,9 @@ def dectect_tracking_face(img, num_face=0):
 
     return tids, tboxes, tkpss
 
-def draw_face_box(frame, thread=20):
+def draw_face_box(frame, thread=20, num_face=-1):
     img = frame.copy()
-    tids, tboxes, tkpss = dectect_tracking_face(img, num_face=1)
+    tids, tboxes, tkpss = dectect_tracking_face(img, num_face=num_face)
     _, embs = check_angle_emb(img, tids, tboxes, tkpss, thread)
 
     for tbox, emb in zip(tboxes, embs):
@@ -124,12 +125,14 @@ def check_face(img):
     return id, name
 
 if __name__ == '__main__':
+    mx_face = args.max_face
+    
     cap = cv2.VideoCapture(0)
     while True:
         _, frame = cap.read()
         frame = cv2.flip(frame, 1)
 
-        img = draw_face_box(frame, 20)
+        img = draw_face_box(frame, 20, mx_face)
 
         cv2.imshow('', img)
 

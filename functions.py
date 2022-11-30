@@ -63,22 +63,20 @@ def draw_fancy_box(img, pt1, pt2, color, thickness, r, d):
     cv2.line(img, (x2, y2 - r), (x2, y2 - r - d), color, thickness)
     cv2.ellipse(img, (x2 - r, y2 - r), (r, r), 0, 0, 90, color, thickness)
 
-def dectect_tracking_face(img, num_face=None):
-    fboxes, kpss = retina_face.detect(img)
-    if num_face is None:
-        num_face = fboxes.shape[0]
-    tboxes, tids = tracker.predict(img, fboxes[:num_face])
-    tkpss = [None]*len(fboxes)
+def dectect_tracking_face(img, num_face=0):
+    fboxes, kpss = retina_face.detect(img, max_num=num_face)
 
+    tboxes, tids = tracker.predict(img, fboxes)
+    tkpss = [None]*len(tboxes)
     for i, val in enumerate(tboxes):
         d = np.sum(np.abs(val-fboxes[:, :-1]), axis=1)
-        tkpss[i] = kpss[np.argmin(d)] 
+        tkpss[i] = kpss[np.argmin(d)]
 
     return tids, tboxes, tkpss
 
 def draw_face_box(frame, thread=20):
     img = frame.copy()
-    tids, tboxes, tkpss = dectect_tracking_face(img)
+    tids, tboxes, tkpss = dectect_tracking_face(img, num_face=1)
     _, embs = check_angle_emb(img, tids, tboxes, tkpss, thread)
 
     for tbox, emb in zip(tboxes, embs):
@@ -116,7 +114,7 @@ def find_face_from_database(emb, thresh=0.3):
         return None
 
 def check_face(img):
-    tids, tboxes, tkpss = dectect_tracking_face(img, num_face=1)
+    tids, tboxes, tkpss = dectect_tracking_face(img)
     _, embs = check_angle_emb(img, tids, tboxes, tkpss)
     id, name = None, None
     for emb in embs:

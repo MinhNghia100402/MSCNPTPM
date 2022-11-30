@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Trang chủ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="https://hithaui.com/static/images/logoHIT.png" />
+
+
+    <!-- Bootstrap Css -->
+    <link href="./public/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="./public/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+    <style>
+        
+        
+    </style>
+</head>
+
+<body data-topbar="dark" class="pace-done" data-layout="horizontal">
+    
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div>
+                <div class="page-content">
+                    <div class="container">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                    <h4 class="mb-sm-0 font-size-18"></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <div class="row">
+
+
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title mb-0">Xin chào</h4>
+                                    </div>
+                                    <div class="card-body text-center" style="height: 50vh;">
+                                        <h1 style="margin-top: 100px; font-size: 8vh" id="name"></h1>
+                                    </div>
+
+                                    <img src="" alt="" id="test">
+                                    <!-- end card body -->
+                                </div>
+                                <!-- end card -->
+                            </div>
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+                <footer class="footer-custom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                © 
+                                <a href="https://github.com/AidenDam" target="_blank" class="text-decoration-underline">Aiden</a>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-sm-end d-none d-sm-block">
+                                    <script>
+                                        document.write(new Date().getFullYear());
+                                    </script> -
+                                    <a href="https://hithaui.com/" target="_blank" class="text-decoration-underline">HIT</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+            <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->
+
+    <!-- JAVASCRIPT -->
+    <script src="./public/libs/jquery/jquery.min.js"></script>
+    <script src="./public/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let urlCurrent = window.location.href
+        const url = new URL(urlCurrent);
+        const params = new URLSearchParams(url.search);
+        const name = params.get("name")
+
+        document.getElementById("name").textContent = name
+    </script>
+    
+</body>
+
+</html>

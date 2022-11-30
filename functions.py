@@ -96,7 +96,7 @@ def check_angle_emb(frame, tids, tboxes , tkpss, thread=10):
     for tid, tbox, tkps in zip(tids, tboxes, tkpss):
         land = landmark.get(frame, tbox)
         angle = landmark.get_face_angle(frame, land, False)[1]
-        if angle < thread:
+        if abs(angle) < thread:
             emb = arc_face.get(frame, tkps)
             embs.append(emb)
             ids.append(tid)

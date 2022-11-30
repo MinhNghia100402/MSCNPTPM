@@ -76,7 +76,7 @@ def dectect_tracking_face(img, num_face=None):
 
     return tids, tboxes, tkpss
 
-def draw_face_box(frame, thread):
+def draw_face_box(frame, thread=20):
     img = frame.copy()
     tids, tboxes, tkpss = dectect_tracking_face(img)
     _, embs = check_angle_emb(img, tids, tboxes, tkpss, thread)

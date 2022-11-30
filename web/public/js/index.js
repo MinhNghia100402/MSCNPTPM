@@ -1,5 +1,7 @@
 let video = null;
 let isLock = false;
+let past_time = 0;
+let time_sent_step = 2500;
 
 const init = () => {
   const constraints = {
@@ -73,12 +75,17 @@ const getImageFromCamera = () => {
     let formData = new FormData();
     formData.append("file", file);
 
-    callAPI(formData);
+    let current_time = (new Date()).getTime();
+    if (current_time - past_time > time_sent_step){
+      callAPI(formData);
+      past_time = current_time;
+    }
   }, "image/jpeg");
 };
 
 const handlerLogin = () => {
   document.getElementById("btn-login").addEventListener("click", () => {
+    past_time = 0;
     isLock = false;
   })
 }

@@ -15,29 +15,35 @@ arc_face = ArcFace(model_name='arcface_s')
 tracker = BYTETracker()
 landmark = Landmark()
 
-# init dataset
-recog_data={}
-database_emb = {
-    'userID': [],
-    'embs': []
-}
+def reload():
+    global recog_data
+    global database_emb
 
+    recog_data={}
+    database_emb = {
+        'userID': [],
+        'embs': []
+    }
+    try:
+        img_data_list = os.listdir(path_data)
+        for i in range(len(img_data_list)):
+            img_path = os.path.join(path_data, img_data_list[i])
+            img = cv2.imread(img_path)
+            fbox_data, kpss_data = retina_face.detect(img)
+            # kpss: keypoint
+            emb_data = arc_face.get(img, kpss_data[0])
+            
+            database_emb['embs'].append(emb_data)
+            database_emb['userID'].append(img_data_list[i].split('.')[-2])
+        print('Extract feature on databse done!')
+    except:
+        print('The database path error!')
+    database_emb['embs'] = np.array(database_emb['embs'])
+
+# init dataset
 path_data = args.dataset
-try:
-    img_data_list = os.listdir(path_data)
-    for i in range(len(img_data_list)):
-        img_path = os.path.join(path_data, img_data_list[i])
-        img = cv2.imread(img_path)
-        fbox_data, kpss_data = retina_face.detect(img)
-        # kpss: keypoint
-        emb_data = arc_face.get(img, kpss_data[0])
-        
-        database_emb['embs'].append(emb_data)
-        database_emb['userID'].append(img_data_list[i])
-    print('Extract feature on databse done!')
-except:
-    print('The database path error!')
-database_emb['embs'] = np.array(database_emb['embs'])
+
+reload()
 # end init dataset
 
 def draw_fancy_box(img, pt1, pt2, color, thickness, r, d):
@@ -83,8 +89,6 @@ def draw_face_box(frame, thread=20, num_face=-1):
     for tbox, emb in zip(tboxes, embs):
         box = tbox[:4].astype(int)
         id = None if emb is None else find_face_from_database(emb)
-        if id is not None:
-            id = id.split('.')[-2]
         cv2.putText(img, ("Strange", id)[id != None], (box[0], box[1]-10), cv2.FONT_HERSHEY_COMPLEX, 1, ((0, 0, 255), (0, 255, 0))[id != None], 2)
         draw_fancy_box(img, (box[0], box[1]), (box[2], box[3]), (127, 255, 255), 2, 10, 20)
     return img
@@ -105,7 +109,7 @@ def check_angle_emb(frame, tids, tboxes , tkpss, thread=15):
     return ids, embs
 
 def find_face_from_database(emb, thresh=0.3):
-    if database_emb['embs'][0].shape[0] == 0:
+    if database_emb['embs'].shape[0] == 0:
         return None
     dis = np.dot(database_emb['embs'], emb) / (np.linalg.norm(database_emb['embs'], axis=1) * np.linalg.norm(emb))
     if np.max(dis) > thresh:
@@ -121,8 +125,27 @@ def check_face(img):
     for emb in embs:
         id = None if emb is None else find_face_from_database(emb)
         if id is not None:
-            name, id = id.split('.')[0].split('_')
+            name, id = id.split('_')
     return id, name
+
+def add_new_face(name, code, img):
+    _, kpss_data = retina_face.detect(img)
+    
+    emb_data = arc_face.get(img, kpss_data[0])
+
+    userID = f'{name}_{code}'
+    if userID in database_emb['userID']:
+        idx = database_emb['userID'].index(userID)
+        database_emb['embs'][idx] = emb_data
+    else:
+        if database_emb['embs'].shape[0] == 0:
+            database_emb['embs'] = np.expand_dims(emb_data, axis=0)
+        else:
+            database_emb['embs'] = np.append(database_emb['embs'], np.expand_dims(emb_data, axis=0), axis=0)
+        database_emb['userID'].append(userID)
+
+    img_path = os.path.join(path_data, f'{userID}.jpg')
+    cv2.imwrite(img_path, cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
 
 if __name__ == '__main__':
     mx_face = args.max_face

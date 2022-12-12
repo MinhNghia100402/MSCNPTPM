@@ -73,7 +73,7 @@ const getImageFromCamera = () => {
     let file = new File([blob], "img.jpg", { type: "image/jpeg" });
 
     let formData = new FormData();
-    formData.append("file", file);
+    formData.append("img", file);
 
     let current_time = (new Date()).getTime();
     if (current_time - past_time > time_sent_step){

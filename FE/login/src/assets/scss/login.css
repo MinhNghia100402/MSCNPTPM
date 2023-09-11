@@ -1,0 +1,169 @@
+
+.login{
+  width:100%;
+  height:948px;
+  background: linear-gradient(to bottom, #839bd8, #c0c0e4); 
+}
+.video {
+    transform: scaleX(-1);
+  }
+  
+.video-container{
+padding-top: 100px;
+}
+.video {
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 30%;
+}
+.boder-video{
+  /* background-color: rgb(235, 225, 184); */
+  border-radius: 25px;
+  width: 40%;
+  height: 40%;
+}
+
+.video video {
+  border-radius: 25px;
+  width: 98%;
+  height: 80%;
+}
+
+.contacts {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  /* margin-left: 35%; */
+  margin-top: 75px;
+  align-items: center;
+  justify-content: center;
+  
+}
+.btn-sigin{
+width:20%;
+display: flex;
+align-items: center;
+justify-content:center;
+
+}
+.btn-sigin link{
+  text-decoration: none;
+}
+.btn-singup-link
+{
+  color: black;
+  text-decoration: none;
+}
+.btn-login{
+  /* width:10%; */
+  display: flex;
+align-items: center;
+justify-content:center;
+}
+
+.contacts button{
+  color: black;
+  font-size: 20px;
+  border-radius: 10px;
+  width: 60%;
+  height: 50px;
+  background-color: rgb(86, 136, 228);
+  box-shadow: 0px 4px 6px rgba(8, 23, 153, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.vetify {
+  width: 25%;
+  height: 30%;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999; 
+  background-color: rgba(149, 182, 252, 0.8); 
+  color: rgb(0, 0, 0);
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.green-circle {
+  width: 40px;
+  height: 40px;
+  background-color: #00ff00; /* Màu xanh */
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+
+.vetify-content{
+
+
+}
+.vetify-symbol{
+
+}
+.zzz button{
+  cursor: pointer;
+}
+
+.button-container {
+  width: 80%;
+  margin-top: 150px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Chia thành hai cột */
+  gap: 50px; /* Khoảng cách giữa các nút */
+  margin-left: 10%;
+}
+
+.btn-comfirm{
+  border:2px solid #2dca1f;
+height: 30px;
+border-radius: 5px;
+text-align: center;
+padding-top: 10px;
+  background-color: #c1fdc1;
+  cursor: pointer;
+}
+.btn-confirm :hover{
+background-color: #25a125;
+transition: 1s;
+}
+.btn-cancel {
+  /* Các thuộc tính CSS cho nút */
+  border:2px solid #f06464;
+  border-radius: 5px;
+height: 30px;
+padding-top: 10px;
+text-align: center;
+  background-color: #ffa9a9;
+  cursor: pointer;
+}
+
+
+/* 
+.circle{
+  height: 160px;
+  width: 160px;
+  position: relative;
+}
+.outer{
+  height: 160px;
+  width: 160px;
+  border: 1px solid green;
+  border-radius: 50%;
+  box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.15),-6px -6px 10px -1px rgba(255,255,255,0.7);
+}
+.inner{
+  height: 160px;
+  width: 160px;
+  border: 1px solid green;
+  border-radius: 50%;
+} */

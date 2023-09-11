@@ -1,0 +1,278 @@
+/* .video-process{
+    transform: scaleX(-1);
+} */
+.webcam-background{
+      transform: scaleX(-1);
+}
+.boder-video-signup img{
+  transform: scaleX(-1);
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.signup-container{
+  width:100%;
+  height:100%;
+  background: linear-gradient(to bottom, #adc1f3, #9a9aa7); 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.webcam{
+  margin-left: -400px;
+}
+.signup-video{
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+.video-process {
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    
+    width: 80%;
+    height: 30%;
+  }
+.boder-video-signup{
+    /* background-color: rgb(235, 225, 184); */
+    border-radius: 25px;
+    width: 40%;
+    height: 40%;
+  }
+.boder-video-signup img{
+  border-radius: 15px;
+  width: 640px;
+  height: 480px;
+}
+  
+.btn-capture {
+
+  margin-top: 50px;
+  width: 100%;
+    transform: scaleX(-1);
+}
+.btn-capture button{
+  margin-left: 270px;
+    font-size: 16px;
+  width: 50%;
+  height: 38px;
+  background-color: #212a3b;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+.btn-capture button :hover{
+  background-color: #32446b;
+  transition: 0.6;
+}
+.video-process video {
+    border-radius: 25px;
+    /* width: 98%;
+    height: 80%; */
+  }
+  
+.information{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+
+
+  }
+input  {
+  height: 30px ;
+  width: 100%;
+   font-size: 16px;
+
+}
+.name-user{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  }
+.name{
+
+}
+.name-values{
+
+}
+.id-user{
+  display: flex;
+  flex-direction: row;
+  margin-top: 20%;
+  align-items: center;
+  justify-content: space-between;
+    
+}
+
+.id{
+
+}
+.id-values{
+
+}
+.class-user{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20%;
+}
+.class{
+
+}
+.class-values{
+
+}
+.years{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20%;
+
+}
+.years-name{
+
+}
+.years-values{
+
+}
+
+.confirm{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20%;
+  cursor: pointer;
+}
+.confirm button{
+  cursor: pointer;
+}
+.images{
+  margin-top: 20%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+
+}
+.show-webcam button{
+  margin-left: 270px;
+    font-size: 16px;
+  width: 50%;
+  height: 38px;
+  background-color: #212a3b;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+.capture{
+
+}
+.choose-images{
+cursor: pointer;
+
+}
+.choose-images button{
+  cursor: pointer;
+}
+.capture button{
+  font-size: 16px;
+  width: 100%;
+  height: 38px;
+  background-color: #212a3b;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+.capture :hover{
+  background-color: #2a3650;
+  transition: 0.6;
+}
+.btn-choose-images{
+  width: 40%;
+  height: 30px;
+  background-color: #212a3b;
+  position: relative;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+button{
+  cursor: pointer;
+}
+.btn-choose-images:hover{
+  background-color: #2a3650;
+  transition: 0.6;
+}
+.btn-choose-images input[type="file"] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+/* .choose-images input[type="file"]{
+  width: 30%;
+  height: 30px;
+  background-color: #212a3b;
+  position: relative;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+} */
+.confirm button{
+  background-color: #839bd8;
+  width:  60%;
+  height: 30px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+.files{
+  /* display: none; */
+}
+.choose-images {
+  width: 100%;
+  height: 40px;
+  font-size: 16px;
+  background-color: #212a3b;
+  position: relative;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+}
+
+.success-message{
+  width: 25%;
+  height: 30%;
+  position: fixed;
+  top: 50%;
+  left: 43%;
+  transform: translate(-50%, -50%);
+  z-index: 9999; 
+  background-color: rgba(200, 212, 241, 0.8); 
+  color: rgb(0, 0, 0);
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+}
+.ok{
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+.kkk{
+  margin-bottom: 30px;
+}

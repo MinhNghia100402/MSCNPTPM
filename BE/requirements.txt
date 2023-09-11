@@ -1,0 +1,15 @@
+opencv-python
+scikit-image
+onnx
+onnxruntime
+gdown
+scikit-learn
+lap
+Cython
+numpy==1.19.5
+cython-bbox
+fastapi
+uvicorn
+python-multipart
+Flask
+Flask-Cors

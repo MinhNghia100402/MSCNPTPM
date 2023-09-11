@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Đăng nhập</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="https://hithaui.com/static/images/logoHIT.png" />
+
+    <!-- ToastifyJs   -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <!-- preloader css -->
+    <link rel="stylesheet" href="./public/css/preloader.min.css" type="text/css" />
+
+    <!-- Bootstrap Css -->
+    <link href="./public/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="./public/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="./public/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+    <style>
+        /* .card-body {} */
+        #btn-login:active {
+            background: linear-gradient(orange, rgb(226, 36, 226)) !important;
+        }
+
+        #btn-login{
+            color: white;
+            font-weight: bold;
+            padding: 9px 40px;
+            margin-top: 5px;
+        }
+
+        video {
+            position: relative;
+            /* border: 10px solid; */
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+            border-image-slice: 1;
+            border-radius: 16px;
+            background: linear-gradient(orange, violet);
+            background-clip: padding-box;
+            padding: 4px;
+        }
+
+        video::after {
+            position: absolute;
+            top: -4px;
+            bottom: -4px;
+            left: -4px;
+            right: -4px;
+            background: linear-gradient(red, blue);
+            content: '';
+            z-index: -1;
+            border-radius: 16px;
+        }
+    </style>
+</head>
+
+<body data-topbar="dark" class="pace-done" data-layout="horizontal">
+    <div class="pace pace-inactive">
+        <div class="pace-progress" data-progress-text="100%" data-progress="99"
+            style="transform: translate3d(100%, 0px, 0px)">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </div>
+
+    <!-- <body data-layout="horizontal"> -->
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div>
+                <div class="page-content">
+                    <div class="container">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                    <h4 class="mb-sm-0 font-size-18"></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <div class="row">
+
+
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title mb-0">Đăng nhập bằng khuôn mặt</h4>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <div class="border-video">
+                                            <video id="video" style="width: 70%"> 
+                                            </video>
+                                            <canvas id="canvas" style="width: 500px;display: none;"></canvas>
+                                            <br>
+                                            <button type="button" class="btn" style="background: linear-gradient(orange, violet);"id="btn-login">Login</button>
+
+                                        </div>
+                                    </div>
+
+                                    <img src="" alt="" id="test">
+                                    <!-- end card body -->
+                                </div>
+                                <!-- end card -->
+                            </div>
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+                <footer class="footer-custom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                © 
+                                <a href="https://github.com/AidenDam" target="_blank" class="text-decoration-underline">Aiden</a>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-sm-end d-none d-sm-block">
+                                    <script>
+                                        document.write(new Date().getFullYear());
+                                    </script> -
+                                    <a href="https://hithaui.com/" target="_blank" class="text-decoration-underline">HIT</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+            <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->
+
+    <!-- JAVASCRIPT -->
+    <script src="./public/libs/jquery/jquery.min.js"></script>
+    <script src="./public/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+
+    </script>
+    <script src="./public/js/index.js"></script>
+    <script src="./public/js/sweetalert2@11.js"></script>
+
+</body>
+
+</html>
